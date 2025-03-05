@@ -20,7 +20,7 @@ movies_before_1980 = cur.fetchall()
 print("Pre-1980 Bond Movies:")
 for movie in movies_before_1980:
     year, title, bond = movie
-    print(f"In {year} {bond} starred in {title}.")
+    print(f"In {year} this movie was release and the actor was {bond} and the movie tittle is {title}.")
 
 # Step 5: Close the database connection
 con.close()

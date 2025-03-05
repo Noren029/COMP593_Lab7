@@ -27,8 +27,11 @@ for row in bond_df.itertuples(index=False):
 
 # Step 5: Commit the transaction
 con.commit()
+#print the results of setting up the database
+print(pd.read_sql_query('SELECT  * FROM movies',con))
 
 # Step 6: Close the database connection
 con.close()
+
 
 print("Database populated successfully.")
