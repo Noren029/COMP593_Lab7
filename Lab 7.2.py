@@ -1,26 +1,30 @@
 import sqlite3
 
-# Step 1: Open a connection to the database
-con = sqlite3.connect('bond_movies.db')
-cur = con.cursor()
+def get_pre_1980_bond_movies(db_path):
+    """Fetches Bond movies released before 1980 from the database."""
+    con = sqlite3.connect(db_path)
+    cur = con.cursor()
+    
+    query = """
+    SELECT Year, Movie, Bond
+    FROM movies
+    WHERE Year < 1980
+    ORDER BY Year ASC
+    """
+    cur.execute(query)
+    movies = cur.fetchall()
+    
+    con.close()
+    return movies
 
-# Step 2: Query the database for movies released before 1980
-query = """
-SELECT Year, Movie, Bond
-FROM movies
-WHERE Year < 1980
-ORDER BY Year ASC
-"""
-cur.execute(query)
+def main():
+    db_path = 'bond_movies.db'
+    movies = get_pre_1980_bond_movies(db_path)
+    
+    print("Pre-1980 Bond Movies:")
+    for year, title, bond in movies:
+        print(f"In {year}, the movie '{title}' was released, starring {bond} as James Bond.")
 
-# Step 3: Fetch all results
-movies_before_1980 = cur.fetchall()
+if __name__ == "__main__":
+    main()
 
-# Step 4: Print each result in the desired format
-print("Pre-1980 Bond Movies:")
-for movie in movies_before_1980:
-    year, title, bond = movie
-    print(f"In {year} this movie was release and the actor was {bond} and the movie tittle is {title}.")
-
-# Step 5: Close the database connection
-con.close()
